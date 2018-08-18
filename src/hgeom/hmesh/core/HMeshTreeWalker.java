@@ -138,6 +138,7 @@ public final class HMeshTreeWalker {
 	 */
 	public HMeshTreeWalker(HMesh mesh, TreePathType pathType,
 			int treeMaxDepth) {
+
 		this.mesh = Objects.requireNonNull(mesh);
 		this.pathType = Objects.requireNonNull(pathType);
 		this.treeMaxDepth = treeMaxDepth;

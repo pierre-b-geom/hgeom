@@ -44,27 +44,27 @@ final class HMesh2DImpl extends HMeshImpl implements HMesh2D {
 	}
 
 	@Override
-	public double x(HVertex v) {
+	public double vertexX(HVertex v) {
 		return xs.get(v);
 	}
 
 	@Override
-	public void setX(HVertex v, double x) {
+	public void setVertexX(HVertex v, double x) {
 		xs.set(v, x);
 	}
 
 	@Override
-	public double y(HVertex v) {
+	public double vertexY(HVertex v) {
 		return ys.get(v);
 	}
 
 	@Override
-	public void setY(HVertex v, double y) {
+	public void setVertexY(HVertex v, double y) {
 		ys.set(v, y);
 	}
 
 	@Override
-	public double[] xy(HVertex v, double[] xy) {
+	public double[] vertexXY(HVertex v, double[] xy) {
 		double[] result = xy == null ? new double[2] : xy;
 		result[0] = xs.get(v);
 		result[1] = ys.get(v);
@@ -72,13 +72,13 @@ final class HMesh2DImpl extends HMeshImpl implements HMesh2D {
 	}
 
 	@Override
-	public void setXY(HVertex v, double[] xy) {
+	public void setVertexXY(HVertex v, double[] xy) {
 		xs.set(v, xy[0]);
 		ys.set(v, xy[1]);
 	}
 
 	@Override
-	public void setXY(HVertex v, double x, double y) {
+	public void setVertexXY(HVertex v, double x, double y) {
 		xs.set(v, x);
 		ys.set(v, y);
 	}

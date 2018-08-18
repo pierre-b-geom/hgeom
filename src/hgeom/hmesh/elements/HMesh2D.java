@@ -32,7 +32,7 @@ public interface HMesh2D extends HMesh {
 	 * @param v
 	 * @return the x coordinate
 	 */
-	double x(HVertex v);
+	double vertexX(HVertex v);
 
 	/**
 	 * Sets the x coordinate of the given vertex
@@ -40,7 +40,7 @@ public interface HMesh2D extends HMesh {
 	 * @param v
 	 * @param x the x coordinate to be set
 	 */
-	void setX(HVertex v, double x);
+	void setVertexX(HVertex v, double x);
 
 	/**
 	 * Gets the y coordinate of the given vertex
@@ -48,7 +48,7 @@ public interface HMesh2D extends HMesh {
 	 * @param v
 	 * @return the y coordinate
 	 */
-	double y(HVertex v);
+	double vertexY(HVertex v);
 
 	/**
 	 * Sets the y coordinate of the given vertex
@@ -56,7 +56,7 @@ public interface HMesh2D extends HMesh {
 	 * @param v
 	 * @param y the y coordinate to be set
 	 */
-	void setY(HVertex v, double y);
+	void setVertexY(HVertex v, double y);
 
 	/**
 	 * Gets the 2D coordinates of the given vertex
@@ -64,8 +64,8 @@ public interface HMesh2D extends HMesh {
 	 * @param v
 	 * @return an array [x y] containing the coordinates
 	 */
-	default double[] xy(HVertex v) {
-		return xy(v, null);
+	default double[] vertexXY(HVertex v) {
+		return vertexXY(v, null);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public interface HMesh2D extends HMesh {
 	 * @param xy if not {@code null}, will contain the 2D coordinates
 	 * @return an array [x y] containing the coordinates
 	 */
-	double[] xy(HVertex v, double[] xy);
+	double[] vertexXY(HVertex v, double[] xy);
 
 	/**
 	 * Sets the coordinate of the given vertex
@@ -83,7 +83,7 @@ public interface HMesh2D extends HMesh {
 	 * @param v
 	 * @param xy the coordinates to be set
 	 */
-	void setXY(HVertex v, double[] xy);
+	void setVertexXY(HVertex v, double[] xy);
 
 	/**
 	 * Sets the coordinate of the given vertex
@@ -92,7 +92,7 @@ public interface HMesh2D extends HMesh {
 	 * @param x the x coordinate to be set
 	 * @param y the y coordinate to be set
 	 */
-	void setXY(HVertex v, double x, double y);
+	void setVertexXY(HVertex v, double x, double y);
 
 	/**
 	 * Calls {@link HMesh#splitEdge(HEdge)} to split the specified half-edge;
@@ -105,8 +105,7 @@ public interface HMesh2D extends HMesh {
 	 */
 	default HVertex splitEdge(HEdge edge, double x, double y) {
 		HVertex v = splitEdge(edge);
-		setX(v, x);
-		setY(v, y);
+		setVertexXY(v, x, y);
 		return v;
 	}
 }

@@ -55,37 +55,37 @@ final class HMesh3DImpl extends HMeshImpl implements HMesh3D {
 	}
 
 	@Override
-	public double x(HVertex v) {
+	public double vertexX(HVertex v) {
 		return xs.get(v);
 	}
 
 	@Override
-	public void setX(HVertex v, double x) {
+	public void setVertexX(HVertex v, double x) {
 		xs.set(v, x);
 	}
 
 	@Override
-	public double y(HVertex v) {
+	public double vertexY(HVertex v) {
 		return ys.get(v);
 	}
 
 	@Override
-	public void setY(HVertex v, double y) {
+	public void setVertexY(HVertex v, double y) {
 		ys.set(v, y);
 	}
 
 	@Override
-	public double z(HVertex v) {
+	public double vertexZ(HVertex v) {
 		return zs.get(v);
 	}
 
 	@Override
-	public void setZ(HVertex v, double y) {
+	public void setVertexZ(HVertex v, double y) {
 		zs.set(v, y);
 	}
 
 	@Override
-	public double[] xyz(HVertex v, double[] xyz) {
+	public double[] vertexXYZ(HVertex v, double[] xyz) {
 		double[] result = xyz == null ? new double[3] : xyz;
 		result[0] = xs.get(v);
 		result[1] = ys.get(v);
@@ -94,14 +94,14 @@ final class HMesh3DImpl extends HMeshImpl implements HMesh3D {
 	}
 
 	@Override
-	public void setXYZ(HVertex v, double[] xyz) {
+	public void setVertexXYZ(HVertex v, double[] xyz) {
 		xs.set(v, xyz[0]);
 		ys.set(v, xyz[1]);
 		zs.set(v, xyz[2]);
 	}
 
 	@Override
-	public void setXYZ(HVertex v, double x, double y, double z) {
+	public void setVertexXYZ(HVertex v, double x, double y, double z) {
 		xs.set(v, x);
 		ys.set(v, y);
 		zs.set(v, z);

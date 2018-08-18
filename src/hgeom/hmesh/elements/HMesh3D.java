@@ -40,7 +40,7 @@ public interface HMesh3D extends HMesh {
 	 * @param v
 	 * @return the x coordinate
 	 */
-	double x(HVertex v);
+	double vertexX(HVertex v);
 
 	/**
 	 * Sets the x coordinate of the given vertex
@@ -48,7 +48,7 @@ public interface HMesh3D extends HMesh {
 	 * @param v
 	 * @param x the x coordinate to be set
 	 */
-	void setX(HVertex v, double x);
+	void setVertexX(HVertex v, double x);
 
 	/**
 	 * Gets the y coordinate of the given vertex
@@ -56,7 +56,7 @@ public interface HMesh3D extends HMesh {
 	 * @param v
 	 * @return the y coordinate
 	 */
-	double y(HVertex v);
+	double vertexY(HVertex v);
 
 	/**
 	 * Sets the y coordinate of the given vertex
@@ -64,7 +64,7 @@ public interface HMesh3D extends HMesh {
 	 * @param v
 	 * @param y the y coordinate to be set
 	 */
-	void setY(HVertex v, double y);
+	void setVertexY(HVertex v, double y);
 
 	/**
 	 * Gets the z coordinate of the given vertex
@@ -72,7 +72,7 @@ public interface HMesh3D extends HMesh {
 	 * @param v
 	 * @return the y coordinate
 	 */
-	double z(HVertex v);
+	double vertexZ(HVertex v);
 
 	/**
 	 * Sets the z coordinate of the given vertex
@@ -80,7 +80,7 @@ public interface HMesh3D extends HMesh {
 	 * @param v
 	 * @param y the y coordinate to be set
 	 */
-	void setZ(HVertex v, double y);
+	void setVertexZ(HVertex v, double y);
 
 	/**
 	 * Gets the coordinates of the given vertex
@@ -88,8 +88,8 @@ public interface HMesh3D extends HMesh {
 	 * @param v
 	 * @return an array [x y z] containing the coordinates
 	 */
-	default double[] xyz(HVertex v) {
-		return xyz(v, null);
+	default double[] vertexXYZ(HVertex v) {
+		return vertexXYZ(v, null);
 	}
 
 	/**
@@ -99,7 +99,7 @@ public interface HMesh3D extends HMesh {
 	 * @param xyz if not {@code null}, will contain the coordinates
 	 * @return an array [x y z] containing the coordinates
 	 */
-	double[] xyz(HVertex v, double[] xyz);
+	double[] vertexXYZ(HVertex v, double[] xyz);
 
 	/**
 	 * Sets the coordinate of the given vertex
@@ -107,7 +107,7 @@ public interface HMesh3D extends HMesh {
 	 * @param v
 	 * @param xyz the coordinates to be set
 	 */
-	void setXYZ(HVertex v, double[] xyz);
+	void setVertexXYZ(HVertex v, double[] xyz);
 
 	/**
 	 * Sets the coordinate of the given vertex
@@ -117,7 +117,7 @@ public interface HMesh3D extends HMesh {
 	 * @param y the y coordinate to be set
 	 * @param z the y coordinate to be set
 	 */
-	void setXYZ(HVertex v, double x, double y, double z);
+	void setVertexXYZ(HVertex v, double x, double y, double z);
 
 	/**
 	 * Calls {@link HMesh#splitEdge(HEdge)} to split the specified half-edge;
@@ -131,9 +131,7 @@ public interface HMesh3D extends HMesh {
 	 */
 	default HVertex splitEdge(HEdge edge, double x, double y, double z) {
 		HVertex v = splitEdge(edge);
-		setX(v, x);
-		setY(v, y);
-		setZ(v, z);
+		setVertexXYZ(v, x, y, z);
 		return v;
 	}
 }

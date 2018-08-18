@@ -39,11 +39,11 @@ final class ToStringUtils {
 		}
 
 		if (mesh instanceof HMesh2D) {
-			return Arrays.toString(((HMesh2D) mesh).xy(v));
+			return Arrays.toString(((HMesh2D) mesh).vertexXY(v));
 		}
 
 		if (mesh instanceof HMesh3D) {
-			return Arrays.toString(((HMesh3D) mesh).xyz(v));
+			return Arrays.toString(((HMesh3D) mesh).vertexXYZ(v));
 		}
 
 		return null;

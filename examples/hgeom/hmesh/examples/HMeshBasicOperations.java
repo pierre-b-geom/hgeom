@@ -50,8 +50,8 @@ public final class HMeshBasicOperations {
 	 */
 	public static OptionalDouble averageLengthOfEdges(HMesh2D mesh) {
 		return mesh.edges().mapToDouble(e -> {
-			double[] headCoords = mesh.xy(e.head());
-			double[] tailCoords = mesh.xy(e.tail());
+			double[] headCoords = mesh.vertexXY(e.head());
+			double[] tailCoords = mesh.vertexXY(e.tail());
 			double xDelta = headCoords[0] - tailCoords[0];
 			double yDelta = headCoords[1] - tailCoords[1];
 			return Math.sqrt(xDelta * xDelta + yDelta * yDelta);
