@@ -46,7 +46,7 @@
    // Get the created half-edge data structure
    HMesh mesh = conversion.mesh();
 
-   // Map the original vertex weights to the half-edge data structure's vertices
+   // Map the original vertex values to the half-edge data structure's vertices
    HDData<HVertex> meshVertexValues = conversion.meshVertexDoubleData(i -> vertexValues[i]);
 
    // Create a data collection for the half-edge data structure's faces

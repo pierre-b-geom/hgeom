@@ -127,7 +127,7 @@ Some of the getters of HFace, HEdge and HVertex are returning a [Sequence](../sr
 
 Several topological operations are provided by [HMesh](../src/hgeom/hmesh/elements/HMesh.java):
 
- - Splitting a face into two parts:
+ - **Splitting a face into two parts**:
 
 ```Java
    HMesh mesh = ...
@@ -139,7 +139,7 @@ Several topological operations are provided by [HMesh](../src/hgeom/hmesh/elemen
    Optional<HFace> newFace = mesh.splitFace(face, vertex1, vertex2);
 ```
 
- - Splitting a half-edge by inserting a new vertex:
+ - **Splitting a half-edge by inserting a new vertex**:
 
 ```Java
    HMesh mesh = ...
@@ -149,7 +149,7 @@ Several topological operations are provided by [HMesh](../src/hgeom/hmesh/elemen
    HVertex vertex = mesh.splitEdge(edge);
 ```
 
- - Removing a vertex:
+ - **Removing a vertex**:
 
 ```Java
    HMesh mesh = ...
@@ -159,7 +159,7 @@ Several topological operations are provided by [HMesh](../src/hgeom/hmesh/elemen
    boolean success = mesh.removeVertex(vertex);
 ```
 
- - Merging two faces:
+ - **Merging two faces**:
 
 ```Java
    HMesh mesh = ...
@@ -215,7 +215,7 @@ These sets of data ([HData](../src/hgeom/hmesh/data/HData.java) for Java objects
 ### Consistency of [HMesh](../src/hgeom/hmesh/elements/HMesh.java)
 An [HMesh](../src/hgeom/hmesh/elements/HMesh.java) is always consistent during its lifetime whatever operations performed on it: 
 
- - [HMesh](../src/hgeom/hmesh/elements/HMesh.java) does not contain orphan [HVertex](../src/hgeom/hmesh/elements/HVertex.java) or [HEdge](../src/hgeom/hmesh/elements/HEdge.java): an [HEdge](../src/hgeom/hmesh/elements/HEdge.java) is always connecting 2 [HVertex](../src/hgeom/hmesh/elements/HVertex.java). A [HVertex](../src/hgeom/hmesh/elements/HVertex.java) is always the origin and the end of several [HEdge](../src/hgeom/hmesh/elements/HEdge.java) 
+ - [HMesh](../src/hgeom/hmesh/elements/HMesh.java) never contains orphan [HVertex](../src/hgeom/hmesh/elements/HVertex.java) or [HEdge](../src/hgeom/hmesh/elements/HEdge.java): an [HEdge](../src/hgeom/hmesh/elements/HEdge.java) is always connecting 2 [HVertex](../src/hgeom/hmesh/elements/HVertex.java). A [HVertex](../src/hgeom/hmesh/elements/HVertex.java) is always the origin and the end of several [HEdge](../src/hgeom/hmesh/elements/HEdge.java) 
  - An [HEdge](../src/hgeom/hmesh/elements/HEdge.java) is always associated with an opposite/twin [HEdge](../src/hgeom/hmesh/elements/HEdge.java). The relationship is always symmetric : edge.opposite().opposite() == edge
  - An [HEdge](../src/hgeom/hmesh/elements/HEdge.java) is always part of one and only one polygonal cycle 
  - All [HEdge](../src/hgeom/hmesh/elements/HEdge.java) of a polygonal cycle are always distinct
