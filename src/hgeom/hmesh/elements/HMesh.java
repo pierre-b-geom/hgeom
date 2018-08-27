@@ -111,6 +111,23 @@ public interface HMesh {
 	HVertex splitEdge(HEdge edge);
 
 	/**
+	 * Collapse a half-edge (and its opposite). Equivalent to "merge" the head
+	 * and the tail of the half-edge. After the collapse, the edge and its
+	 * opposite will be removed from this mesh. The head will be removed as well
+	 * and its incoming and outgoing half-edges will be reconnected to the tail
+	 *
+	 * @param edge the edge to collapse
+	 * @return {@code true} if successfull collapse ; {@code false} otherwise.
+	 *         The collapse will not take place if the specified edge or its
+	 *         opposite is part of a cycle / face containing only 3 elements.
+	 *         Collapse would otherwise result in degenerate faces containing
+	 *         only 2 half-edges
+	 * @throws IllegalStateException if the given half-edge is discarded
+	 * @throws NullPointerException  if the given half-edge is {@code null}
+	 */
+	boolean collapseEdge(HEdge edge);
+
+	/**
 	 * Removes a vertex from the mesh.
 	 * <p>
 	 * The vertex will be removed only if a/ its degree is 2 and b/ it does not

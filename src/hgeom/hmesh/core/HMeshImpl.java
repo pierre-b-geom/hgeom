@@ -28,7 +28,9 @@ import hgeom.hmesh.util.Loops;
  *
  */
 // TODO : Installer tests de performance avec librairie externe
-// TODO : Utiliser Oxygen & Git
+// TODO : Utiliser Oxygen
+// TODO : Logger dans HMeshImpl pour les operations d'edition
+// TODO : amelioration statut HFace
 class HMeshImpl implements HMesh {
 
 	/**
@@ -438,6 +440,69 @@ class HMeshImpl implements HMesh {
 		HEdgeImpl.linkAsOpposites(newEdge, edgeOpposite);
 		HEdgeImpl.linkAsOpposites(edge, newEdgeOpposite);
 		return newVertex;
+	}
+
+	@Override
+	public boolean collapseEdge(HEdge edge) {
+		modCount++;
+		HEdgeImpl.requireValid(edge);
+
+		HEdge edgeNext = edge.next();
+
+		// Rien a faire si arete dans un triangle
+		if (edge == edgeNext.next().next()) {
+			return false;
+		}
+
+		HEdge edgeOpposite = edge.opposite();
+		HEdge edgeOppositeNext = edgeOpposite.next();
+
+		// Rien a faire si arete opposee dans un triangle
+		if (edgeOpposite == edgeOppositeNext.next().next()) {
+			return false;
+		}
+
+		// Mise a jour des 2 faces si elles referencent les 2 aretes a
+		// supprimer
+		HFace face = edge.face();
+		HFace faceOpposite = edgeOpposite.face();
+
+		if (face.edge() == edge) {
+			HFaceImpl.setEdge(face, edgeNext);
+		}
+
+		if (faceOpposite.edge() == edgeOpposite) {
+			HFaceImpl.setEdge(faceOpposite, edgeOppositeNext);
+		}
+
+		HVertex head = edge.head();
+		HVertex tail = edgeOpposite.head();
+		HEdge edgeOppositePrevious = edgeOpposite.previous();
+		HEdge edgePrevious = edge.previous();
+
+		// Iteration sur les aretes pointant vers le sommet a supprimer
+		// Les aretes doivent pointer sur le sommet restant
+		HEdge e = edge;
+
+		do {
+			HEdgeImpl.setVertex(e, tail);
+			e = e.next().opposite();
+		} while (e != edge);
+
+		// Decoupage de l'arete a supprimer et de son opposee
+		HEdgeImpl.link(edgePrevious, edgeNext);
+		HEdgeImpl.link(edgeOppositePrevious, edgeOppositeNext);
+
+		// Suppression reference a la demi-arete qui va etre supprimee
+		if (tail.edge() == edgeOpposite) {
+			HVertexImpl.setEdge(tail, edgeOppositePrevious);
+		}
+
+		// Declassification des 2 aretes et du sommet supprimes
+		HElementImpl.discard(edge);
+		HElementImpl.discard(edgeOpposite);
+		HElementImpl.discard(head);
+		return true;
 	}
 
 	@Override

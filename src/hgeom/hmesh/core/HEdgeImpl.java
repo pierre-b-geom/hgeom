@@ -11,7 +11,6 @@ import hgeom.hmesh.sequence.Sequence;
 import hgeom.hmesh.util.Loops;
 
 /**
- * Immutable sauf lors d'une periode de construction
  *
  * @author Pierre B.
  */
