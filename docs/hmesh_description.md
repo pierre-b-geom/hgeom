@@ -99,7 +99,7 @@ An [HVertex](../src/hgeom/hmesh/elements/HVertex.java) modelizes a vertex. A [HV
    // Get all half-edges pointing at the vertex
    Sequence<HEdge> incomingEdges = vertex.incomingEdges()
    
-   // Get all vertices neighbors of the vertex (in connection via an half-edge)
+   // Get all vertices neighbors of the vertex (in connection via a half-edge)
    Sequence<HVertex> neighbors = vertex.neighbors();
 ```
 
@@ -120,14 +120,15 @@ Some of the getters of HFace, HEdge and HVertex are returning a [Sequence](../sr
       ...
    }
    
+   // Tell if a vertex is a neighbor of a half-edge's head
+   boolean isNeighbor = edge.outgoingEdges().anyMatch(e -> e.head() == vertex);
 ```
-
 
 ### Topological operations on [HMesh](../src/hgeom/hmesh/elements/HMesh.java)
 
 Several topological operations are provided by [HMesh](../src/hgeom/hmesh/elements/HMesh.java):
 
- - **Splitting a face into two parts**:
+ - **Splitting a face into two parts**
 
 ```Java
    HMesh mesh = ...
@@ -139,27 +140,7 @@ Several topological operations are provided by [HMesh](../src/hgeom/hmesh/elemen
    Optional<HFace> newFace = mesh.splitFace(face, vertex1, vertex2);
 ```
 
- - **Splitting a half-edge by inserting a new vertex**:
-
-```Java
-   HMesh mesh = ...
-   HEdge edge = ...
-   
-   // Split a edge and return the newly vertex
-   HVertex vertex = mesh.splitEdge(edge);
-```
-
- - **Removing a vertex**:
-
-```Java
-   HMesh mesh = ...
-   HVertex vertex = ...
-   
-   // Remove a vertex
-   boolean success = mesh.removeVertex(vertex);
-```
-
- - **Merging two faces**:
+ - **Merging two faces**
 
 ```Java
    HMesh mesh = ...
@@ -168,6 +149,36 @@ Several topological operations are provided by [HMesh](../src/hgeom/hmesh/elemen
    
    // Merge 2 adjacent faces
    boolean success = mesh.mergeFaces(face1, face2);
+```
+
+ - **Splitting an edge by inserting a new vertex**
+
+```Java
+   HMesh mesh = ...
+   HEdge edge = ...
+   
+   // Split a half-edge (and its opposite) and return the newly vertex
+   HVertex vertex = mesh.splitEdge(edge);
+```
+
+ - **Collapsing an edge**
+
+```Java
+   HMesh mesh = ...
+   HEdge edge = ...
+   
+   // Collapse a half-edge (and its opposite) by merging its head and its tail
+   boolean success = mesh.collapseEdge(edge);
+```
+
+ - **Removing a vertex**
+
+```Java
+   HMesh mesh = ...
+   HVertex vertex = ...
+   
+   // Remove a vertex
+   boolean success = mesh.removeVertex(vertex);
 ```
 
 ### Data association with a [HMesh](../src/hgeom/hmesh/elements/HMesh.java)
@@ -219,3 +230,4 @@ An [HMesh](../src/hgeom/hmesh/elements/HMesh.java) is always consistent during i
  - An [HEdge](../src/hgeom/hmesh/elements/HEdge.java) is always associated with an opposite/twin [HEdge](../src/hgeom/hmesh/elements/HEdge.java). The relationship is always symmetric : edge.opposite().opposite() == edge
  - An [HEdge](../src/hgeom/hmesh/elements/HEdge.java) is always part of one and only one polygonal cycle 
  - All [HEdge](../src/hgeom/hmesh/elements/HEdge.java) of a polygonal cycle are always distinct
+ - No collapsed faces: each [HFace](../src/hgeom/hmesh/elements/HFace.java) always contains a cycle of at least 3 half-edges
