@@ -12,6 +12,7 @@ import java.util.function.BooleanSupplier;
 import hgeom.hmesh.data.HIData;
 import hgeom.hmesh.elements.HEdge;
 import hgeom.hmesh.elements.HFace;
+import hgeom.hmesh.elements.HFace.Status;
 import hgeom.hmesh.util.Loops;
 import hgeom.hmesh.winding.Winding;
 
@@ -128,13 +129,17 @@ final class CycleGraphToHFaces {
 				HFace face;
 
 				if (iCycle < cycleGraph.numCycles()) {
-					face = elementFactory.createFace(cycleEdge, true, false);
+					face = elementFactory.createFace(cycleEdge, Status.INTERIOR,
+							false);
+
 					int cycleIndex = cycleGraph.getCycleIndex(iCycle);
 					faceIndices.set(face, cycleIndex);
 				}
 
 				else {
-					face = elementFactory.createFace(cycleEdge, false, false);
+					face = elementFactory.createFace(cycleEdge, Status.EXTERIOR,
+							false);
+
 					faceIndices.set(face, -1);
 				}
 

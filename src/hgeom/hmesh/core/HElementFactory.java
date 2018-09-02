@@ -3,6 +3,7 @@ package hgeom.hmesh.core;
 import hgeom.hmesh.elements.HEdge;
 import hgeom.hmesh.elements.HElement;
 import hgeom.hmesh.elements.HFace;
+import hgeom.hmesh.elements.HFace.Status;
 import hgeom.hmesh.elements.HMesh;
 import hgeom.hmesh.elements.HVertex;
 
@@ -150,14 +151,12 @@ final class HElementFactory {
 
 	/**
 	 * @param edge
-	 * @param primary
+	 * @param status
 	 * @param checkValidity
 	 * @return
 	 */
-	public HFace createFace(HEdge edge, boolean primary,
-			boolean checkValidity) {
-
-		return HFaceImpl.create(faceCount++, edge, primary, checkValidity);
+	public HFace createFace(HEdge edge, Status status, boolean checkValidity) {
+		return HFaceImpl.create(faceCount++, edge, status, checkValidity);
 	}
 
 	/**

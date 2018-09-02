@@ -81,7 +81,7 @@ final class ToStringUtils {
 
 		StringBuilder sb = new StringBuilder();
 		int numEdges = f.edge().cycle().count();
-		sb.append(f.isPrimary() ? "Primary, " : "Complementary, ");
+		sb.append(f.status()).append(", ");
 		sb.append(numEdges).append(" edges: ");
 		sb.append(Objects.toString(f.edge().head()));
 		HEdge e = f.edge();

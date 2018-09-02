@@ -275,12 +275,10 @@ public final class HConversion<M extends HMesh> {
 		requirefaceIndices();
 		HData<HFace, D> data = mesh.createFaceData();
 
+		// Attention aux indices egal a -1 pour les faces externes
 		data.setAll(f -> {
-			if (f.isPrimary()) {
-				return faceIndexToObj.apply(faceIndices.get(f));
-			}
-
-			return null;
+			int faceIndex = faceIndices.get(f);
+			return faceIndex == -1 ? null : faceIndexToObj.apply(faceIndex);
 		});
 
 		return data;
@@ -302,11 +300,8 @@ public final class HConversion<M extends HMesh> {
 		HBData<HFace> data = mesh.createFaceBooleanData();
 
 		data.setAll(f -> {
-			if (f.isPrimary()) {
-				return faceIndexToBoolean.test(faceIndices.get(f));
-			}
-
-			return false;
+			int faceIndex = faceIndices.get(f);
+			return faceIndex != -1 && faceIndexToBoolean.test(faceIndex);
 		});
 
 		return data;
@@ -326,11 +321,8 @@ public final class HConversion<M extends HMesh> {
 		HIData<HFace> data = mesh.createFaceIntData();
 
 		data.setAll(f -> {
-			if (f.isPrimary()) {
-				return faceIndexToInt.applyAsInt(faceIndices.get(f));
-			}
-
-			return 0;
+			int faceIndex = faceIndices.get(f);
+			return faceIndex == -1 ? 0 : faceIndexToInt.applyAsInt(faceIndex);
 		});
 
 		return data;
@@ -352,11 +344,10 @@ public final class HConversion<M extends HMesh> {
 		HDData<HFace> data = mesh.createFaceDoubleData();
 
 		data.setAll(f -> {
-			if (f.isPrimary()) {
-				return faceIndexToDouble.applyAsDouble(faceIndices.get(f));
-			}
+			int faceIndex = faceIndices.get(f);
 
-			return 0;
+			return faceIndex == -1 ? 0
+					: faceIndexToDouble.applyAsDouble(faceIndex);
 		});
 
 		return data;

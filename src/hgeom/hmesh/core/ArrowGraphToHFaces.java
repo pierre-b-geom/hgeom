@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import hgeom.hmesh.elements.HEdge;
 import hgeom.hmesh.elements.HFace;
+import hgeom.hmesh.elements.HFace.Status;
 import hgeom.hmesh.util.Loops;
 
 /**
@@ -123,7 +124,8 @@ final class ArrowGraphToHFaces {
 				arrow = arrowGraph.arrow(arrow.head(), hEdgeNext.head());
 			} while (arrow != faceArrow);
 
-			HFace face = elementFactory.createFace(arrow.hEdge(), true, true);
+			HFace face = elementFactory.createFace(arrow.hEdge(),
+					Status.UNKNOWN, true);
 
 			if (face == null) {
 				return false;

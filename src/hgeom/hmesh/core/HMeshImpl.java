@@ -30,7 +30,6 @@ import hgeom.hmesh.util.Loops;
 // TODO : Installer tests de performance avec librairie externe
 // TODO : Utiliser Oxygen
 // TODO : Logger dans HMeshImpl pour les operations d'edition
-// TODO : amelioration statut HFace
 class HMeshImpl implements HMesh {
 
 	/**
@@ -273,18 +272,17 @@ class HMeshImpl implements HMesh {
 
 		// A quelles faces appartiennent les 2 demi-aretes de la coupure ?
 		HFace newFace;
-		boolean primary = face.isPrimary();
 
 		// Si la premiere demi-arete appartient a la face, creation de la
 		// nouvelle face a partir de l'autre demi-arete
 		if (face.edges().anyMatch(edgeToV1::equals)) {
 			HEdgeImpl.setFace(edgeToV1, face);
-			newFace = elementFactory.createFace(edgeToV2, primary, false);
+			newFace = elementFactory.createFace(edgeToV2, face.status(), false);
 		}
 
 		else {
 			HEdgeImpl.setFace(edgeToV2, face);
-			newFace = elementFactory.createFace(edgeToV1, primary, false);
+			newFace = elementFactory.createFace(edgeToV1, face.status(), false);
 		}
 
 		faces.add(newFace);

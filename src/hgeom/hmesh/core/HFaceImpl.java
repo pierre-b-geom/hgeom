@@ -14,43 +14,43 @@ import hgeom.hmesh.util.Loops;
  *
  * @author Pierre B.
  */
-abstract class HFaceImpl extends HElementImpl implements HFace {
+class HFaceImpl extends HElementImpl implements HFace {
 
 	/**
 	 *
 	 */
-	private static final class PrimaryHFaceImpl extends HFaceImpl {
+	private static final class InteriorHFaceImpl extends HFaceImpl {
 
 		/**
 		 * @param id
 		 * @param edge
 		 */
-		public PrimaryHFaceImpl(int id, HEdge edge) {
+		public InteriorHFaceImpl(int id, HEdge edge) {
 			super(id, edge);
 		}
 
 		@Override
-		public boolean isPrimary() {
-			return true;
+		public Status status() {
+			return Status.INTERIOR;
 		}
 	}
 
 	/**
 	 *
 	 */
-	private static final class ComplementaryHFaceImpl extends HFaceImpl {
+	private static final class ExteriorHFaceImpl extends HFaceImpl {
 
 		/**
 		 * @param id
 		 * @param edge
 		 */
-		public ComplementaryHFaceImpl(int id, HEdge edge) {
+		public ExteriorHFaceImpl(int id, HEdge edge) {
 			super(id, edge);
 		}
 
 		@Override
-		public boolean isPrimary() {
-			return false;
+		public Status status() {
+			return Status.EXTERIOR;
 		}
 	}
 
@@ -72,32 +72,34 @@ abstract class HFaceImpl extends HElementImpl implements HFace {
 	/**
 	 * @param id
 	 * @param edge
-	 * @param primary
+	 * @param status
 	 * @param checkValidity
 	 * @return la face ou null si pas valide
 	 */
-	public static HFace create(int id, HEdge edge, boolean primary,
+	public static HFace create(int id, HEdge edge, Status status,
 			boolean checkValidity) {
 
-		HFace face;
-
-		if (primary) {
-			face = new PrimaryHFaceImpl(id, edge);
+		if (checkValidity && !validateCycle(edge)) {
+			return null;
 		}
 
-		else {
-			face = new ComplementaryHFaceImpl(id, edge);
+		if (status == Status.INTERIOR) {
+			return new InteriorHFaceImpl(id, edge);
 		}
 
-		return checkValidity && !validateFace(face) ? null : face;
+		if (status == Status.EXTERIOR) {
+			return new ExteriorHFaceImpl(id, edge);
+		}
+
+		return new HFaceImpl(id, edge);
 	}
 
 	/**
 	 * @param face
 	 * @return
 	 */
-	private static boolean validateFace(HFace face) {
-		Sequence<HEdge> edges = face.edges();
+	private static boolean validateCycle(HEdge edge) {
+		Sequence<HEdge> edges = edge.cycle();
 		Sequence<HEdge> oppositeEdges = edges.map(HEdge::opposite);
 		return edges.allMatch(e -> oppositeEdges.allMatch(oe -> oe != e));
 	}
@@ -116,6 +118,11 @@ abstract class HFaceImpl extends HElementImpl implements HFace {
 	 */
 	public static void setEdge(HFace face, HEdge edge) {
 		requireValid(face).edge = HEdgeImpl.requireValid(edge);
+	}
+
+	@Override
+	public Status status() {
+		return Status.UNKNOWN;
 	}
 
 	@Override
