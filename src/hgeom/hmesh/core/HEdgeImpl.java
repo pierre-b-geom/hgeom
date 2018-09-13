@@ -1,5 +1,6 @@
 package hgeom.hmesh.core;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
@@ -167,6 +168,7 @@ class HEdgeImpl extends HElementImpl implements HEdge {
 
 	@Override
 	public final Optional<HEdge> next(Predicate<? super HEdge> predicate) {
+		Objects.requireNonNull(predicate);
 		requireNotDiscarded();
 		return Loops.findFirst(this, HEdge::next, predicate);
 	}

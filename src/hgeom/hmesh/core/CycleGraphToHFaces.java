@@ -137,7 +137,7 @@ final class CycleGraphToHFaces {
 				}
 
 				else {
-					face = elementFactory.createFace(cycleEdge, Status.EXTERIOR,
+					face = elementFactory.createFace(cycleEdge, Status.BOUNDARY,
 							false);
 
 					faceIndices.set(face, -1);

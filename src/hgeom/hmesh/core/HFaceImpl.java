@@ -31,6 +31,7 @@ class HFaceImpl extends HElementImpl implements HFace {
 
 		@Override
 		public Status status() {
+			requireNotDiscarded();
 			return Status.INTERIOR;
 		}
 	}
@@ -50,7 +51,8 @@ class HFaceImpl extends HElementImpl implements HFace {
 
 		@Override
 		public Status status() {
-			return Status.EXTERIOR;
+			requireNotDiscarded();
+			return Status.BOUNDARY;
 		}
 	}
 
@@ -87,7 +89,7 @@ class HFaceImpl extends HElementImpl implements HFace {
 			return new InteriorHFaceImpl(id, edge);
 		}
 
-		if (status == Status.EXTERIOR) {
+		if (status == Status.BOUNDARY) {
 			return new ExteriorHFaceImpl(id, edge);
 		}
 
@@ -122,6 +124,7 @@ class HFaceImpl extends HElementImpl implements HFace {
 
 	@Override
 	public Status status() {
+		requireNotDiscarded();
 		return Status.UNKNOWN;
 	}
 

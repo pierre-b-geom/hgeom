@@ -11,6 +11,7 @@ public interface HVertex extends HElement {
 
 	/**
 	 * @return one of the edges pointing at this vertex
+	 * @throws IllegalStateException if this vertex is discarded
 	 */
 	HEdge edge();
 
@@ -19,6 +20,7 @@ public interface HVertex extends HElement {
 	 * pointing at this vertex.
 	 *
 	 * @return the degree of this vertex. Always >= 2
+	 * @throws IllegalStateException if this vertex is discarded
 	 */
 	int degree();
 
@@ -28,7 +30,9 @@ public interface HVertex extends HElement {
 	 *
 	 * @param other
 	 * @return {@code true} if yhis vertex and the specified one are neighbors
-	 * @throws NullPointerException if argument is {@code null}
+	 * @throws IllegalStateException if this half-edge or the specified one is
+	 *                               discarded
+	 * @throws NullPointerException  if argument is {@code null}
 	 * @see HVertex#neighbors()
 	 */
 	boolean isNeighborOf(HVertex other);
@@ -38,21 +42,20 @@ public interface HVertex extends HElement {
 	 * vertex connected to this vertex by a pair of twin half-edges
 	 *
 	 * @return
+	 * @throws IllegalStateException if this vertex is discarded
 	 * @see HVertex#isNeighborOf(HVertex)
 	 */
 	Sequence<HVertex> neighbors();
 
 	/**
-	 * Returns a sequence over the half-edges pointing at this vertex
-	 *
-	 * @return
+	 * @return an ordered sequence over the half-edges pointing at this vertex
+	 * @throws IllegalStateException if this vertex is discarded
 	 */
 	Sequence<HEdge> incomingEdges();
 
 	/**
-	 * Returns a sequence over the half-edges whose tail is this vertex
-	 *
-	 * @return
+	 * @return an ordered sequence over the half-edges whose tail is this vertex
+	 * @throws IllegalStateException if this vertex is discarded
 	 */
 	Sequence<HEdge> outgoingEdges();
 }

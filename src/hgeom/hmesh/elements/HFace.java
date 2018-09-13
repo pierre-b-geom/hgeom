@@ -20,42 +20,47 @@ public interface HFace extends HElement {
 	INTERIOR,
 
 	/**
-	 * The face is an external border of the {@link HMesh mesh} it is part of.
-	 * An external border is a face that surrounds the {@link HMesh mesh} (an
-	 * outer border) or a face that surrounds a hole within the {@link HMesh
-	 * mesh} (an inner border)
+	 * The face is a boundary of the {@link HMesh mesh} it is part of. A
+	 * boundary is a face that surrounds the {@link HMesh mesh} (an outer
+	 * border) or a face that surrounds a hole within the {@link HMesh mesh} (an
+	 * inner border)
 	 */
-	EXTERIOR,
+	BOUNDARY,
 
 	/**
 	 * Unknown status. The face could be either inside or on the border of the
-	 * {@link HMesh mesh} it is part of. when a {@link HMesh mesh} is built from
+	 * {@link HMesh mesh} it is part of. When a {@link HMesh mesh} is built from
 	 * a set of edges, all its faces have an unknown status
 	 */
 	UNKNOWN
 	}
 
 	/**
-	 * @return whether this face is a primary or a complementary face
+	 * @return the {@link Status status} of this face
+	 * @throws IllegalStateException if this face is discarded
 	 */
 	Status status();
 
 	/**
 	 * @return one of the half-edges located on the border of this face
+	 * @throws IllegalStateException if this face is discarded
 	 */
 	HEdge edge();
 
 	/**
-	 * @return a ordered sequence over the half-edges located on the border of
-	 *         this face. Half-edges are ordered in the sequence so that a
-	 *         half-edge is the {@link HEdge#next} of its preceeding half-edge
+	 * @return a ordered circular sequence over the half-edges located along the
+	 *         border of this face. Half-edges are ordered in the sequence so
+	 *         that a half-edge is the {@link HEdge#next} of its preceeding
+	 *         half-edge
+	 * @throws IllegalStateException if this face is discarded
 	 */
 	Sequence<HEdge> edges();
 
 	/**
-	 * @return a ordered sequence over the vertices located on the border of
-	 *         this face. Vertices are ordered so that 2 consecutive vertices in
-	 *         the sequence are neighbors
+	 * @return a ordered circular sequence over the vertices located along the
+	 *         border of this face. Vertices are ordered so that 2 consecutive
+	 *         vertices in the sequence are neighbors
+	 * @throws IllegalStateException if this face is discarded
 	 */
 	Sequence<HVertex> vertices();
 
@@ -71,9 +76,9 @@ public interface HFace extends HElement {
 	boolean isNeighborOf(HFace other);
 
 	/**
-	 * Returns a sequence over the neighbors of this face. The neighbors are the
-	 * faces in contact with this face via a shared border conisiting of at
-	 * least one pair of twin half-edges
+	 * Returns a orderd circular sequence over the neighbors of this face. The
+	 * neighbors are the faces in contact with this face via a shared border
+	 * consisting of at least one pair of twin half-edges
 	 * <p>
 	 * In the particular case of a face being in contact with this face via two
 	 * (or more) distinct borders, the neighbor face will appear twice (or more)

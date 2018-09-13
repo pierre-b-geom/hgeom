@@ -16,17 +16,17 @@ import hgeom.hmesh.data.HIData;
 public interface HMesh {
 
 	/**
-	 * @return a sequential stream of this mesh's faces
+	 * @return a sequential stream over this mesh's faces
 	 */
 	Stream<HFace> faces();
 
 	/**
-	 * @return a sequential stream of this mesh's edges
+	 * @return a sequential stream over this mesh's edges
 	 */
 	Stream<HEdge> edges();
 
 	/**
-	 * @return a sequential stream of this mesh's vertices
+	 * @return a sequential stream over this mesh's vertices
 	 */
 	Stream<HVertex> vertices();
 
@@ -46,8 +46,8 @@ public interface HMesh {
 	 * <p>
 	 * The split:
 	 * <p>
-	 * 1/ creates a pair of twin half-edges joining 2 vertices located o the
-	 * border of the face and dividing the specified face into 2 zones
+	 * 1/ creates a pair of twin half-edges joining 2 vertices located on the
+	 * boundary of the face and dividing the face into 2 zones
 	 * <p>
 	 * 2/ makes the face become one of the 2 zones
 	 * <p>
@@ -95,7 +95,7 @@ public interface HMesh {
 	 *    v1 <-------------------------------------> v2<p>
 	 * <p>
 	 * After:<p>
-	 * 1 new vertex v, 4 half-edges: he[v1 -> v], heopp[v -> v1]<p>
+	 * 1 new vertex v,<p> 4 half-edges: he[v1 -> v], heopp[v -> v1]
 	 * he2[v2 -> v], h2opp[v -> v2]<p>
 	 * <p>
 	 *    v1 <----------------> v <----------------> v2<p>
@@ -113,13 +113,14 @@ public interface HMesh {
 	/**
 	 * Collapse a half-edge (and its opposite). Equivalent to "merge" the head
 	 * and the tail of the half-edge. After the collapse, the edge and its
-	 * opposite will be removed from this mesh. The head will be removed as well
-	 * and its incoming and outgoing half-edges will be reconnected to the tail
+	 * opposite will be removed from this mesh and discarded. The head will be
+	 * removed as well and its incoming and outgoing half-edges will be
+	 * reconnected to the tail
 	 *
 	 * @param edge the edge to collapse
 	 * @return {@code true} if successfull collapse ; {@code false} otherwise.
 	 *         The collapse will not take place if the specified edge or its
-	 *         opposite is part of a cycle / face containing only 3 elements.
+	 *         opposite is part of a half-edge cycle containing only 3 elements.
 	 *         Collapse would otherwise result in degenerate faces containing
 	 *         only 2 half-edges
 	 * @throws IllegalStateException if the given half-edge is discarded
@@ -138,12 +139,12 @@ public interface HMesh {
 	 * <p>
 	 * <code>
 	 * Before:<p>
-	 * 3 vertices, 4 half-edges: h1[v1 -> v], h1opp[v -> v1], h2[v2 -> v], h2opp[v -> v1]<p>
+	 * 3 vertices: v1, v, v2,<p>4 half-edges: h1[v1 -> v], h1opp[v -> v1], h2[v2 -> v], h2opp[v -> v1]<p>
 	 * <p>
 	 *    v1 <----------------> v <----------------> v2<p>
 	 * <p>
 	 * After:<p>
-	 * 2 vertices, 2 half-edges with theirs heads changed: h1[v1 -> v2], h2[v2 -> v1]<p>
+	 * 2 vertices: v1, v2,<p>2 half-edges with theirs heads changed: h1[v1 -> v2], h2[v2 -> v1]<p>
 	 * <p>
 	 *    v1 <-------------------------------------> v2<p>
 	 * <p>
